@@ -1,0 +1,22 @@
+{
+    "extends": "solhint:recommended",
+    "plugins": ["prettier"],
+    "rules": {
+        "code-complexity": ["warn", 7],
+        "function-max-lines": ["warn", 50],
+        "max-line-length": ["error", 80],
+        "constructor-syntax": "warn",
+        "comprehensive-interface": "warn",
+        "func-param-name-mixedcase": "warn",
+        "modifier-name-mixedcase": "warn",
+        "private-vars-leading-underscore": ["warn", {"strict": true}],
+        "func-order": "off",
+        "ordering": "warn",
+        "func-visibility": ["warn", {"ignoreConstructors": true}],
+        "mark-callable-contracts": "off",
+
+        "compiler-version": ["error", "^0.8.0"],
+
+        "prettier/prettier": "error"
+    }
+}

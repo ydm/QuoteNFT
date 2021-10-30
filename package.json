@@ -1,14 +1,18 @@
 {
-  "name": "quotetruffle",
-  "version": "1.0.0",
-  "description": "Truffle, please!",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Yordan Miladinov <jordanMiladinov@gmail.com>",
-  "license": "GPL-3.0-or-later",
-  "dependencies": {
-    "truffle": "^5.4.17"
-  }
+    "name": "quotetruffle",
+    "version": "1.0.0",
+    "description": "Truffle, please!",
+    "main": "index.js",
+    "scripts": {
+        "solhint": "npx solhint 'contracts/**/*.sol'",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Yordan Miladinov <jordanMiladinov@gmail.com>",
+    "license": "GPL-3.0-or-later",
+    "dependencies": {
+        "@openzeppelin/contracts": "^4.3.2",
+        "solhint": "^3.3.6",
+        "solhint-plugin-prettier": "^0.0.5",
+        "truffle": "^5.4.17"
+    }
 }

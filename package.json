@@ -13,6 +13,7 @@
     "license": "GPL-3.0-or-later",
     "dependencies": {
         "@openzeppelin/contracts": "^4.3.2",
+        "@truffle/hdwallet-provider": "^1.5.1",
         "solhint": "^3.3.6",
         "solhint-plugin-prettier": "^0.0.5",
         "truffle": "^5.4.17"

@@ -55,14 +55,15 @@ contract("QuoteNFT", function (accounts) {
 
             // Check the transaction.
             const event = tx.logs[0];
-            const { from, to, tokenId } = event.args;
-            assert.strictEqual(from, "0x0000000000000000000000000000000000000000");
+            const {from, to, tokenId} = event.args;
+            const zero = "0x0000000000000000000000000000000000000000";
+            assert.strictEqual(from, zero);
             assert.strictEqual(to, accounts[1]);
             assert.strictEqual(tokenId.toNumber(), 1);
         });
     });
 
-    it("should embed the quote on mint", async function() {
+    it("should embed the quote on mint", async function () {
         await QuoteNFT.deployed().then(
             (instance) => instance.quote(1)
         ).then((text) => assert.strictEqual(text, "Three."));
@@ -84,7 +85,7 @@ contract("QuoteNFT", function (accounts) {
         ));
     });
 
-    it("should send everything to owner on withdraw", async function() {
+    it("should send everything to owner on withdraw", async function () {
         // This is a bit ugly.  Is there a prettier way to pass that?
         let before = "0";
 
@@ -98,7 +99,7 @@ contract("QuoteNFT", function (accounts) {
             // account #1 to pay for the gas.
             (instance) => instance.withdraw({from: accounts[1]})
         ).then(
-            (tx) => web3.eth.getBalance(accounts[0])
+            () => web3.eth.getBalance(accounts[0])
         ).then(function (after) {
             const b = web3.utils.toBN(before);
             const a = web3.utils.toBN(after);

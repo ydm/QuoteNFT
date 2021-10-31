@@ -20,13 +20,8 @@ interface IWithdrawer {
 contract Withdrawer is IWithdrawer {
     address public owner = msg.sender;
 
-    modifier restricted() {
-        require(msg.sender == owner, "Restricted function");
-        _;
-    }
-
-    function withdraw() external payable override restricted {
-        payable(msg.sender).transfer(address(this).balance);
+    function withdraw() external payable override {
+        payable(owner).transfer(address(this).balance);
     }
 }
 

@@ -1,58 +1,66 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: GPL
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
 interface IQuoteNFT is IERC721 {
-    function mint(address to, string memory quote)
+    function mint(string memory quote)
         external
+        payable
         returns (uint256 tokenId);
-
-    function exists(uint256 tokenId) external view returns (bool);
 
     function quote(uint256 tokenId) external view returns (string memory);
 }
 
-contract QuoteNFT is ERC721, IQuoteNFT {
-    using Counters for Counters.Counter;
-    Counters.Counter private _counter;
+interface IWithdrawer {
+    function withdraw() external payable;
+}
 
-    address public owner;
-    mapping(uint256 => string) private _quotes;
+contract Withdrawer is IWithdrawer {
+    address public owner = msg.sender;
 
     modifier restricted() {
-        require(msg.sender == owner, "Function is restricted");
+        require(msg.sender == owner, "Restricted function");
         _;
     }
 
-    constructor() ERC721("QuoteNFT", "QFT") {
-        owner = msg.sender;
+    function withdraw() external payable override restricted {
+        payable(msg.sender).transfer(address(this).balance);
     }
+}
 
-    function mint(address to, string memory quote_)
+contract QuoteNFT is ERC721, IQuoteNFT, Withdrawer {
+    using Counters for Counters.Counter;
+    Counters.Counter private _counter;
+
+    // TODO ydm: Can I use an array here?
+    //   - Is it cheaper (less gas)?
+    //   - Is it reliable?  What if a token gets burnt?
+    mapping(uint256 => string) public quote;
+
+    //solhint-disable-next-line no-empty-blocks
+    constructor() ERC721("QuoteNFT", "QFT") {}
+
+    function mint(string memory text)
         external
+        payable
         override
-        restricted
         returns (uint256 tokenId)
     {
+        uint256 price = 10**17;
+        require(msg.value >= price, "Minting costs 0.1 ETH");
+
+        // It's important to mint the NFT first before introducing any
+        // state changes as _mint() may revert the transaction.
+        uint256 next = _counter.current() + 1;
+        _mint(msg.sender, next);
+
+        // Once the NFT is minted successfully, we can increment the
+        // ID counter and store the quote text.
         _counter.increment();
-        uint256 id = _counter.current();
-        _quotes[id] = quote_;
-        _mint(to, id);
-        return id;
-    }
+        quote[next] = text;
 
-    function exists(uint256 tokenId) external view override returns (bool) {
-        return _exists(tokenId);
-    }
-
-    function quote(uint256 tokenId)
-        external
-        view
-        override
-        returns (string memory)
-    {
-        return _quotes[tokenId];
+        return next;
     }
 }

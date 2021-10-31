@@ -26,7 +26,7 @@ contract QuoteNFT is ERC721, IQuoteNFT {
         _;
     }
 
-    constructor() ERC721("Quote NFT", "QFT") {
+    constructor() ERC721("QuoteNFT", "QFT") {
         owner = msg.sender;
     }
 

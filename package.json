@@ -4,8 +4,10 @@
     "description": "Truffle, please!",
     "main": "index.js",
     "scripts": {
+        "compile": "npx truffle compile && npm run solhint",
+        "console": "npx truffle console",
         "solhint": "npx solhint 'contracts/**/*.sol'",
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "npx truffle test"
     },
     "author": "Yordan Miladinov <jordanMiladinov@gmail.com>",
     "license": "GPL-3.0-or-later",

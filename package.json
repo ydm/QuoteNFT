@@ -1,11 +1,11 @@
 {
     "name": "quotenft",
     "version": "1.0.0",
-    "description": "Truffle, please!",
-    "main": "index.js",
+    "description": "NFTs associated with a text quote.",
     "scripts": {
         "compile": "npx truffle compile && npm run solhint",
         "console": "npx truffle console",
+        "migrate": "npx truffle migrate",
         "solhint": "npx solhint 'contracts/**/*.sol'",
         "test": "npx truffle test"
     },

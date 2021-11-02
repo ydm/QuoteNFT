@@ -9,5 +9,6 @@
 
 ### TODOs:
 
-- Use array instead of map [here](https://github.com/ydm/QuoteNFT/blob/main/contracts/QuoteNFT.sol#L35)?
-- Etherscan expects `totalSupply()` apparently.
+- Should I use array instead of map [here](https://github.com/ydm/QuoteNFT/blob/main/contracts/QuoteNFT.sol#L35)?
+- Etherscan expects `totalSupply()` apparently.  Even for ERC721s.
+- What happens with a quote/image when an NFT is burnt?
